@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+    
+    <title>Lepalamang Tuckshop - Sales</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+    <body>
+ <header>
+        <div class="container">
+            <div class="logo">Lephalamang Tuckshop</div>
+            
+        </div>
+    </header>
+    <nav>
+        <div class="container">
+            <a href="HOME.html" >HOME</a>
+            <a href="PURCHASE ORDER.html">SALES PURCHASE</a>
+            <a href="ABOUT US .html" >ABOUT US</a>
+            <a href="LOGIN.html" class="active" >LOGIN</a>
+        </div>
+    </nav>
+
+    <div class="login">
+        <h2>Login</h2>
+        <form onsubmit="return validateForm()">
+         <div class="form-group">
+            <input type="text" id="username" name="Username" required><br>
+            <input type="password" id="password" name="Password" required><br>
+
+            <p id="error" class="error"></p>
+         </div>
+            <div class="buttons">
+               <button class="btn btn-submit"   id="submit">  SUBMIT</button>
+            </div>
+        </form>
+    </div>
+</body>
+ <footer>
+        <div class="container">
+            <div class="footer-content">
+               
+                <div class="footer-info">
+                    <h3>Contact Us</h3>
+                    <p>Email: lephalamangtuckshop57@gmail.com</p>
+                    <p>Phone: +27 12 345 6789</p>
+                </div>
+                
+                <div class="footer-info">
+                    <h3>Location</h3>
+                    <p>2453 magistrate Street</p>
+                    <p>Namakgale B, 1391</p>
+                </div>
+                
+               
+            </div>
+            
+            <div class="copyright">
+                &copy; Lephalamang Tuckshop. All rights reserved. BY Lukhele es
+            </div>
+        </div>
+    </footer>
+    <script>
+        //VALIDATION FOR LOGIN
+        function validateForm() {
+          var username = document.getElementById('username')
+            var password = document.getElementById('password').value;
+            var error = document.getElementById('error');
+
+            // Check password length
+            if (password.length <= 6) {
+                error.textContent = "Password must be >6 characters";
+                return false;
+            }
+            
+            if (password.length > 20) {
+                error.textContent = "Password must be ≤20 characters";
+                return false;
+            }
+            
+            if (password == "password" || password == "123456") {
+                error.textContent = "Password is too common";
+                return false;
+            }
+            
+            error.textContent = "";
+            alert("Login successful!");
+            return true; 
+        }
+       
+            
+    </script>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!--0404015793080 LUKHELE ES ISAT-->
+<head>
+    
+    <title>Lepalamang Tuckshop - Sales</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Lephalamang Tuckshop</div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <a href="HOME.html">HOME</a>
+            <a href="PURCHASE ORDER.html"class="active">SALES PURCHASE</a>
+            <a href="ABOUT US .html" >ABOUT US</a>
+             <a href="LOGIN.html" >LOGIN</a>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="container">
+            <h1 class="page-title">SALES PURCHASE</h1>
+            
+            <div class="sales-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">NAME:</label>
+                        <input type="text" id="name" placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="surname">SURNAME:</label>
+                        <input type="text" id="surname" placeholder="Enter your surname">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact">CONTACT:</label>
+                    <input type="tel" id="contact" placeholder="Enter your contact number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="products">PRODUCTS:</label>
+                    <select id="products">
+                        <option value="">Select a product</option>
+                        <option value="bread">Bread - R15.00</option>
+                        <option value="milk">Milk - R12.50</option>
+                        <option value="canned_goods">Canned Goods - R25.00</option>
+                        <option value="snacks">Snacks - R10.00</option>
+                        <option value="beverages">Beverages - R18.00</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">QUANTITY:</label>
+                    <input type="number" id="quantity" min="1" value="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="subtotal">SUBTOTAL:</label>
+                    <input type="text" id="subtotal" readonly value="R0.00">
+                </div>
+                
+                <div class="form-group">
+                    <label for="payment">PAYMENT AMOUNT:</label>
+                    <input type="number" id="payment" min="0" step="0.01" placeholder="Enter payment amount">
+                </div>
+                
+                <div class="buttons">
+                    <button class="btn btn-cancel" id="cancelBtn">CANCEL</button>
+                    <button class="btn btn-primary" id="purchaseBtn">PURCHASE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+               
+                <div class="footer-info">
+                    <h3>Contact Us</h3>
+                    <p>Email: lephalamangtuckshop57@gmail.com</p>
+                    <p>Phone: +27 12 345 6789</p>
+                </div>
+                
+                <div class="footer-info">
+                    <h3>Location</h3>
+                    <p>2453 magistrate Street</p>
+                    <p>Namakgale B, 1391</p>
+                </div>
+                
+               
+            </div>
+            
+            <div class="copyright">
+                &copy; Lephalamang Tuckshop. All rights reserved. BY Lukhele es
+            </div>
+        </div>
+    </footer>
+
+    <script> 
+// Product prices
+const productPrices = {
+    bread: 15.00,
+    milk: 12.50,
+    canned_goods: 25.00,
+    snacks: 10.00,
+    beverages: 18.00
+};
+
+// DECLARING INPUT AND BUTTONS
+const productSelect = document.getElementById('products');
+const quantityInput = document.getElementById('quantity');
+const subtotalInput = document.getElementById('subtotal');
+const purchaseBtn = document.getElementById('purchaseBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+
+// Calculate subtotal when product or quantity changes
+function calculateSubtotal() {
+    const selectedProduct = productSelect.value;
+    const quantity = parseInt(quantityInput.value) || 0;
+    
+    if (selectedProduct && productPrices[selectedProduct]) {
+        const subtotal = productPrices[selectedProduct] * quantity;
+        subtotalInput.value = `R${subtotal.toFixed(2)}`;
+    } else {
+        subtotalInput.value = 'R0.00';
+    }
+}
+
+// Event listeners for sales page
+productSelect.addEventListener('change', calculateSubtotal);
+quantityInput.addEventListener('input', calculateSubtotal);
+
+// Handle purchase button click
+purchaseBtn.addEventListener('click', function() {
+    const name = document.getElementById('name').value;
+    const surname = document.getElementById('surname').value;
+    const contact = document.getElementById('contact').value;
+    const payment = parseFloat(document.getElementById('payment').value) || 0;
+    const subtotal = parseFloat(subtotalInput.value.replace('R', '')) || 0;
+    
+    // Basic validation
+    if (!name || !surname) {
+        alert('Please enter your name and surname');
+        return;
+    }
+    
+    if (!contact) {
+        alert('Please enter your contact information');
+        return;
+    }
+    
+    if (!productSelect.value) {
+        alert('Please select a product');
+        return;
+    }
+    
+    if (payment < subtotal) {
+        alert(`Payment amount is insufficient. Please pay at least R${subtotal.toFixed(2)}`);
+        return;
+    }
+    //DISPLAY
+    // Successful purchase
+    alert(`Thank you for your purchase, ${name} ${surname}!\n\nYour order has been processed successfully.`);
+    
+    // Reset form
+    document.getElementById('name').value = '';
+    document.getElementById('surname').value = '';
+    document.getElementById('contact').value = '';
+    productSelect.selectedIndex = 0;
+    quantityInput.value = 1;
+    subtotalInput.value = 'R0.00';
+    document.getElementById('payment').value = '';
+});
+
+// Handle cancel button
+cancelBtn.addEventListener('click', function() {
+    if (confirm('Are you sure you want to cancel this purchase?')) {
+        document.getElementById('name').value = '';
+        document.getElementById('surname').value = '';
+        document.getElementById('contact').value = '';
+        productSelect.selectedIndex = 0;
+        quantityInput.value = 1;
+        subtotalInput.value = 'R0.00';
+        document.getElementById('payment').value = '';
+    }
+});
+    </script>
+</body>
+</html>
